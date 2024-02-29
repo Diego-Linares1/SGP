@@ -27,7 +27,7 @@ export function LoginPage() {
         <div className="h-[calc(100vh-100px)] flex items-center justify-center">
             <div className='bg-zinc-800 max-w-md w-full p-10 rounded-md'>
             <div className='w-full flex justify-center'>
-                <h1 className='font-mono text-3xl font-bold'>SGP-MEDIATEC</h1>
+                <h1 className='font-mono text-3xl font-bold'>MEDIATEC</h1>
             </div>
             <form onSubmit={onSubmit}>
                 <Label htmlFor='email'>Email:</Label>

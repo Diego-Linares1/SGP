@@ -1,11 +1,31 @@
-import axios from './axios'
+import axios from "./axios";
 
-export const getTasksRequest = () => axios.get('/tasks');
+// obtener todas las respuestas
+export const getTasksRequest = async () => axios.get("/tasks/listar");
 
-export const getTaskRequest = (id) => axios.get(`/tasks/${tasks.id}`);
+export const createTaskRequest = async (task) => axios.post("/tasks/agregar", task);
 
-export const createTaskRequest = (tasks) => axios.post('/tasks', tasks);
+export const updateTaskRequest = async (idTarea, task) => {
+  try {
+    const res = await axios.put(`/tasks/actualizar/${idTarea}`, task);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    throw error; // Puedes manejar el error según tus necesidades
+  }
 
-export const updateTaskRequest = (tasks) => axios.put(`/tasks/${tasks.id}`, tasks);
+}
 
-export const deleteTaskRequest = (id) => axios.delete(`/tasks/${tasks.id}`, tasks);
+export const deleteTaskRequest = async (idTarea) => axios.delete("/tasks/eliminar", {
+  data: { idTarea } // Envolviendo el ID en un objeto
+});
+
+export const getTaskRequest = async (idTarea) => {
+  try {
+    const res = await axios.get(`/tasks/tasks/${idTarea}`);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    throw error; // Puedes manejar el error según tus necesidades
+  }
+};

@@ -68,7 +68,7 @@ export const profile = async(req, res) => {
         { outFormat: oracledb.OBJECT }
     );
     
-    const usuarioEncontrado = result.rows[0];
+    const usuarioEncontrado = result.rows;
 
 
     if (!usuarioEncontrado) return res.status(400).json({ message: "Usuario no encontrado" })

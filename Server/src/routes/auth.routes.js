@@ -3,7 +3,7 @@ import express from "express";
 import { login, logout, profile, verifyToken } from "../controllers/auth.controllers.js";
 import { authRequired } from "../middlewares/validationToken.js";
 
-const router = express.Router();
+const router = express.Router(); 
 
 router.post("/login", login);
 router.post("/logout", logout);

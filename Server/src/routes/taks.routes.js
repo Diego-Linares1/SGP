@@ -5,15 +5,15 @@ import {getTasks, getTask, createTask, updateTask, deleteTask} from '../controll
 
 const router = Router();
 
-router.get('/tasks', authRequired, getTasks)
+router.get('/listar', authRequired, getTasks)
 
 router.get('/tasks/:id', authRequired, getTask)
 
-router.post('/tasks', authRequired, createTask)
+router.post('/agregar', authRequired, createTask)
 
-router.put('/tasks/:id', authRequired, updateTask)
+router.put('/actualizar/:id', authRequired, updateTask)
 
-router.delete('/tasks/:id', authRequired, deleteTask)
+router.delete('/eliminar', authRequired, deleteTask)
 
 
 export default router;

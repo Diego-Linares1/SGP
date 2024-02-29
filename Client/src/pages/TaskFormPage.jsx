@@ -1,25 +1,41 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 import { Button, Card, Input, Label } from "../components/ui";
 import { Textarea } from "../components/ui/Textarea";
 import { useTasks } from "../context/TaskContext";
 import { useForm } from "react-hook-form"
-import { ComboBox } from "../components/ui/ComboBox";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function TaskFormPage() {
 
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, setValue  } = useForm();
+    const { createTask, getTask, updateTask } = useTasks();
+    const navigate = useNavigate();
+    const params = useParams();
 
-    const { createTask } = useTasks();
-
-    console.log(createTask());
-
-    const onSubmit = handleSubmit((data) => {
-        data.estado = selectedOption?.value;
-        createTask(data)
+    const onSubmit = handleSubmit((data) => {  
+        if(params.id) {
+            updateTask(params.id, data)
+        } else {
+            createTask(data)
+        }
+        navigate('/tasks')
     })
 
-    const [selectedOption, setSelectedOption] = useState(null);
+    useEffect(() => {
+        async function loadTask() {
+            if (params.id) {
+                const tasks = await getTask(params.id);
+                console.log("idProyecto: ", tasks[0].IDPROYECTO)
+                setValue('idProyecto', tasks[0].IDPROYECTO);
+                setValue('idUsuario', tasks[0].IDUSUARIO);
+                setValue('idEstado', tasks[0].IDESTADO);
+                setValue('nombre', tasks[0].NOMBRE);
+                setValue('descripcion', tasks[0].DESCRIPCION);
+            }
+        }
+        loadTask();
+    }, [params.id]);
+
 
     return (
         <Card>
@@ -29,7 +45,7 @@ export default function TaskFormPage() {
                     type="number"
                     name="proyect"
                     placeholder="Proyecto ID"
-                    {...register("number")}
+                    {...register("idProyecto")}
                     autoFocus
                 />
 
@@ -38,27 +54,40 @@ export default function TaskFormPage() {
                     type="number"
                     name="user"
                     placeholder="Usuario ID"
-                    {...register("number")}
+                    {...register("idUsuario")}
                     autoFocus
                 />
 
-                <Label htmlFor="state">Estado</Label>
-                <ComboBox selectedOption={selectedOption}/>
+                <Label htmlFor="estado">Estado</Label>
+                <Input
+                    type="number"
+                    name="estado"
+                    placeholder="Estado"
+                    {...register("idEstado")}
+                    autoFocus
+                />
 
-                <Label htmlFor="name">otro</Label>
+                <Label htmlFor="name">Nombre</Label>
                 <Input
                     type="text"
                     name="name"
                     placeholder="Nombre"
-                    {...register("title")}
+                    {...register("nombre")}
                     autoFocus
                 />
 
-                <Label htmlFor="title">Title</Label>
+                <Label htmlFor="name">Descripcion</Label>
+                <Textarea
+                    name="description"
+                    id="description"
+                    rows="3"
+                    placeholder="Description"
+                    {...register("descripcion")}
+                ></Textarea>
 
                 {/* <Label htmlFor="date">Date</Label> */}
                 {/* <Input type="date" name="date" {...register("date")} /> */}
-                <Button>Save</Button>
+                <Button>Guardar Tarea</Button>
             </form>
         </Card>
     )

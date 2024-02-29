@@ -5,11 +5,13 @@ import  TasksPage  from './pages/TaskPage';
 import  TaskFormPage  from './pages/TaskFormPage';
 import {ProtectedRoute} from  './route/ProtectedRoute';
 import { TaskProvider } from './context/TaskContext';
+import { Navbar } from './components/Navbar';
 
 function HomePage() {
   return (
     <>
-      <h1>Home Page</h1>
+      <h1>PROYECTO DE BASE DE DATOS RELACIONES</h1>
+      <h1>Oracle</h1>
     </>
   )
 }
@@ -20,6 +22,7 @@ function App() {
       <TaskProvider>
         <BrowserRouter>
           <main className="container content-container mx-auto px-10 md:px-0">
+            <Navbar/>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/login" element={<LoginPage />} />
